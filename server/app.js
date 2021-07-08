@@ -16,7 +16,6 @@ io.on('connect', (socket) => {
   console.log('connected');
 
   socket.on('fill', (id) => {
-    console.log(id);
     socket.broadcast.emit('fillBack', id);
   });
 
