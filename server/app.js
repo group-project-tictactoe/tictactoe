@@ -11,9 +11,17 @@ const io = require('socket.io')(http, {
 
 const cors = require('cors');
 app.use(cors());
+let totalPlayer = 0
 
 io.on('connect', (socket) => {
   console.log('connected');
+
+  io.emit('totalPlayer', totalPlayer)
+
+  socket.on('startGame', (playerName) => {
+    totalPlayer++
+    io.emit('totalPlayer', totalPlayer)
+  })
 
   socket.on('fill', (id) => {
     socket.broadcast.emit('fillBack', id);
