@@ -1,6 +1,6 @@
 <template>
   <div class="play-ground">
-    <div class="players">
+    <!-- <div class="players">
       <table>
         <tbody>
           <tr>
@@ -19,7 +19,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
 
     <div class="mt-2 text-center text-2xl font-light tracking-wider uppercase text-gray-100 antialiased">
       It is <span class="mt-2 text-center text-2xl font-bold text-yellow-500 uppercase">{{ activePlayer }}</span> turn!
@@ -238,6 +238,8 @@ export default {
 }
 .play-ground {
   margin: 50px 0px;
+  left: 0;
+  right: 0;
   padding: 20px 0px;
   border: 1px solid #dfe1e5;
   border-radius: 8px;
@@ -344,9 +346,12 @@ export default {
 }
 
 .cell.x::before,
-.cell.x::after,
-.cell.o::before {
+.cell.x::after {
   background-color: rgba(245, 158, 11);
+}
+
+.cell.o::before {
+  background-color: rgb(11, 159, 245);
 }
 
 /* Buat efek hover di kotak yg masih kosong dan bisa diklik */
