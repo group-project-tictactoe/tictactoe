@@ -1,20 +1,18 @@
 <template>
   <div class="home">
+
     <EnterName></EnterName>
 
-    <BoardComponent></BoardComponent>
   </div>
 </template>
 
 <script>
-import EnterName from '../components/EnterName.vue';
-import BoardComponent from '../components/Board.vue';
+import EnterName from '../components/EnterName.vue'
 
 export default {
   name: 'Home',
   components: {
-    EnterName,
-    BoardComponent,
+    EnterName
   },
-};
+}
 </script>
