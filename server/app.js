@@ -1,19 +1,24 @@
-const express = require('express')
-const app = express()
-const PORT = 3000
+const express = require('express');
+const app = express();
+const PORT = 3000;
 
-const http = require('http').createServer(app)
+const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: '*'
-  }
-})
+    origin: '*',
+  },
+});
 
-const cors = require('cors')
-app.use(cors())
+const cors = require('cors');
+app.use(cors());
 
 io.on('connect', (socket) => {
   console.log('connected');
-})
 
-http.listen(PORT, () => console.log(`listening on port ${PORT}`))
+  socket.on('fill', (id) => {
+    console.log(id);
+    socket.broadcast.emit('fillBack', id);
+  });
+});
+
+http.listen(PORT, () => console.log(`listening on port ${PORT}`));
