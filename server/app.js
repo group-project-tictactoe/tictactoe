@@ -19,6 +19,10 @@ io.on('connect', (socket) => {
     console.log(id);
     socket.broadcast.emit('fillBack', id);
   });
+
+  socket.on('replay', () => {
+    socket.broadcast.emit('replayBack');
+  });
 });
 
 http.listen(PORT, () => console.log(`listening on port ${PORT}`));
