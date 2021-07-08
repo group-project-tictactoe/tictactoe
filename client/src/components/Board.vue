@@ -20,9 +20,14 @@
         </tbody>
       </table>
     </div>
-    <p style="text-align: center;font-size: 20px;margin: 10px 0px;">
+
+    <div class="mt-2 text-center text-2xl font-light tracking-wider uppercase text-gray-100 antialiased">
+      It is <span class="mt-2 text-center text-2xl font-bold text-yellow-500 uppercase">{{ activePlayer }}</span> turn!
+    </div>
+
+    <!-- <p style="text-align: center;font-size: 20px;margin: 10px 0px;">
       It is <span style="text-transform: uppercase;color: #14bdac;font-weight: bold;">{{ activePlayer }}</span> turn!
-    </p>
+    </p> -->
     <div class="play">
       <div class="result-overlay" id="result-overlay">
         <p id="p-overlay">
@@ -30,7 +35,7 @@
             <i class="fas fa-times" v-if="winner == 'x'"></i>
             <i class="far fa-circle" v-if="winner == 'o'"></i>
           </span>
-          WON
+          WON!
         </p>
       </div>
       <!-- <table>
@@ -54,7 +59,6 @@
       </table> -->
 
       <!-- <div class="board-game"> -->
-      <h1>NOTE: Ini Board Component!!!</h1>
 
       <div class="board" :class="activePlayer" id="board">
         <div class="cell" data-cell @click="fillInCell(0)" id="cell_0"></div>
@@ -76,10 +80,15 @@
     </div>
     <div style="text-align: center;">
       <span
-        style="color: #545454;
-                    font-weight: bold;
-                    font-size: 25px;
-                    cursor: pointer;"
+        class="mt-2
+        text-center
+        text-2xl
+        font-extrabold
+        tracking-wider
+        uppercase
+        text-yellow-500
+        antialiased
+        cursor-pointer"
         @click="replay()"
         >REPLAY</span
       >
@@ -174,19 +183,20 @@ export default {
 
 <style>
 .activePlayer {
-  border-bottom: 3px solid #14bdac !important;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.16) !important;
+  border-bottom: 3px solid rgba(224, 231, 255) !important;
+  box-shadow: 0 4px 5px rgba(187, 178, 178, 0.16) !important;
 }
 .players div {
   width: 200px;
   border-bottom: 3px solid transparent;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(79, 70, 229);
   font-size: 24px;
   margin: 0;
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
+  background-color: rgba(199, 210, 254);
   border-radius: 8px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 1px 1px rgba(189, 189, 189);
   line-height: 16px;
   text-transform: uppercase;
   padding: 10px 8px;
@@ -214,7 +224,7 @@ export default {
   font-weight: 100;
 } */
 .play {
-  background-color: #14bdac;
+  background-color: rgba(17, 24, 39);
   padding: 20px 0px;
   position: relative;
 }
@@ -234,7 +244,7 @@ export default {
 }
 .result-overlay {
   position: absolute;
-  background: #15bdacb8;
+  background: rgba(79, 70, 229, 0.9);
   width: 100%;
   height: 100%;
   top: 0;
@@ -245,7 +255,7 @@ export default {
   font-size: 50px;
   font-weight: 100;
   text-align: center;
-  color: rgb(84, 84, 84);
+  color: rgba(245, 158, 11);
   vertical-align: middle;
   height: 100%;
   justify-content: center;
@@ -254,7 +264,7 @@ export default {
   font-weight: bold;
 }
 .result-overlay > p > span {
-  color: #f2ebd3;
+  color: #d3f2dd;
   font-size: 100px;
   margin-right: 20px;
 }
@@ -294,7 +304,9 @@ export default {
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
-  border: 1px solid black;
+  border: 2px solid rgba(17, 24, 39);
+  background-color: rgba(31, 41, 55);
+  border-radius: 0.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -334,14 +346,14 @@ export default {
 .cell.x::before,
 .cell.x::after,
 .cell.o::before {
-  background-color: black;
+  background-color: rgba(245, 158, 11);
 }
 
 /* Buat efek hover di kotak yg masih kosong dan bisa diklik */
 .board.x .cell:not(.x):not(.o):hover::before,
 .board.x .cell:not(.x):not(.o):hover::after,
 .board.o .cell:not(.x):not(.o):hover::before {
-  background-color: rgba(156, 163, 175);
+  background-color: rgba(165, 180, 252);
 }
 
 .cell.x::before,
@@ -385,7 +397,7 @@ export default {
 .board.o .cell:not(.x):not(.o):hover::after {
   width: calc(var(--mark-size) * 0.7);
   height: calc(var(--mark-size) * 0.7);
-  background-color: rgba(107, 114, 128);
+  background-color: rgba(31, 41, 55);
 }
 
 /* Pesan yg muncul pas menang (harus pakai class .show di bawah) */
