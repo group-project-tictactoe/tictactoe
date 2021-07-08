@@ -62,17 +62,28 @@ export default {
             set (value) {
                 this.$store.commit('SET_TOTAL_PLAYER', value)
             }
+        },
+        players: {
+            get () {
+                return this.$store.state.players
+            },
+            set (value) {
+                this.$store.commit('SET_PLAYER_NAME', value)
+            }
         }
     },
     methods: {
         joinRoom () {
             socket.emit('startGame', this.playerName)
+            localStorage.setItem('player_id', socket.id)
             this.$router.push('/play')
         }
     },
     mounted () {
-        socket.on('totalPlayer', totalPlayer => {
+        socket.on('totalPlayer', (totalPlayer, player) => {
+            console.log('nih ', totalPlayer, player);
             this.totalPlayer = totalPlayer
+            this.players = player
         })
     }
 }

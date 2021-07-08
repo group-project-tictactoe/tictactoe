@@ -22,7 +22,12 @@
     </div> -->
 
     <div class="mt-2 text-center text-2xl font-light tracking-wider uppercase text-gray-100 antialiased">
-      It is <span class="mt-2 text-center text-2xl font-bold text-yellow-500 uppercase">{{ activePlayer }}</span> turn!
+      <div v-if="totalPlayer > 1">
+        It is <span class="mt-2 text-center text-2xl font-bold text-yellow-500 uppercase">{{ playerName }}</span> turn!
+      </div>
+      <div v-else>
+        Waiting for other player
+      </div>
     </div>
 
     <!-- <p style="text-align: center;font-size: 20px;margin: 10px 0px;">
@@ -89,8 +94,23 @@
         text-yellow-500
         antialiased
         cursor-pointer"
-        @click="replay()"
+        @click.prevent="replay()"
         >REPLAY</span
+      >
+    </div>
+    <div style="text-align: center;">
+      <span
+        class="mt-2
+        text-center
+        text-2xl
+        font-extrabold
+        tracking-wider
+        uppercase
+        text-yellow-500
+        antialiased
+        cursor-pointer"
+        @click.prevent="exit()"
+        >EXIT</span
       >
     </div>
   </div>
@@ -104,6 +124,7 @@ export default {
   data() {
     return {
       activePlayer: 'x',
+      // playerName: players.player1,
       cells: [null, null, null, null, null, null, null, null, null],
       countClicks: 0,
       winningConditions: [
@@ -119,6 +140,42 @@ export default {
       winner: null,
     };
   },
+  computed: {
+    totalPlayer: {
+      get () {
+        return this.$store.state.totalPlayer
+      },
+      set (value) {
+        this.$store.commit('SET_TOTAL_PLAYER', value)
+      }
+    },
+    players: {
+      get () {
+        return this.$store.state.players
+      },
+      set (value) {
+        this.$store.commit('SET_PLAYER_NAME', value)
+      }
+    },
+    playerName: {
+      get () {
+        let name = this.players.player1
+        if (this.activePlayer == 'x') {
+          name = this.players.player1
+        } else {
+          name = this.players.player2
+        }
+        return name
+      }
+    }
+  },
+  watch: {
+    totalPlayer (value) {
+      if (value == 0) {
+        this.$router.push('/')
+      }
+    }
+  },
   methods: {
     fillInCell(id) {
       let cellName = 'cell_' + id;
@@ -131,10 +188,20 @@ export default {
         this.cells[id] = this.activePlayer;
         this.activePlayer = this.activePlayer == 'x' ? 'o' : 'x';
 
+        // if (this.activePlayer == 'x') {
+        //   this.playerName = this.players.player1
+        // } else {
+        //   this.playerName = this.players.player2
+        // }
+
         if (this.countClicks >= 5) this.checkGame();
 
         socket.emit('fill', id);
       }
+    },
+    exit () {
+      socket.emit('exitGame')
+      this.$router.push('/')
     },
     checkGame() {
       for (let i = 0; i <= 7; i++) {
@@ -177,6 +244,10 @@ export default {
     socket.on('replayBack', () => {
       this.replay();
     });
+
+    socket.on('totalPlayer', totalPlayer => {
+      this.totalPlayer = totalPlayer
+    })
   },
 };
 </script>
