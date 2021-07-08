@@ -12,14 +12,28 @@ const io = require('socket.io')(http, {
 const cors = require('cors');
 app.use(cors());
 let totalPlayer = 0
+let player = {
+  player1: '',
+  player2: ''
+}
 
 io.on('connect', (socket) => {
   console.log('connected');
 
-  io.emit('totalPlayer', totalPlayer)
+  io.emit('totalPlayer', totalPlayer, player)
 
   socket.on('startGame', (playerName) => {
-    totalPlayer++
+    totalPlayer++  
+    if (totalPlayer == 1) {
+      player.player1 = playerName
+    } else if (totalPlayer > 1) {
+      player.player2 = playerName
+    }
+    io.emit('totalPlayer', totalPlayer, player)
+  })
+
+  socket.on('exitGame', () => {
+    totalPlayer = 0
     io.emit('totalPlayer', totalPlayer)
   })
 
