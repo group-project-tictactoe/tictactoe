@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import BoardComponent from '../views/Game.vue'
 import { io } from "socket.io-client";
-const socket = io("http://localhost:3000");
+const socket = io("https://groupproject-tictactoe.herokuapp.com");
 
 Vue.use(VueRouter)
 

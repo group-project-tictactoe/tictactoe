@@ -64,7 +64,7 @@
 <script>
 import LogoTicTac from '../assets/tictactoe-logo-02.png';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:3000');
+const socket = io('https://groupproject-tictactoe.herokuapp.com');
 
 export default {
   name: 'EnterName',
