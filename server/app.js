@@ -11,31 +11,37 @@ const io = require('socket.io')(http, {
 
 const cors = require('cors');
 app.use(cors());
-let totalPlayer = 0
+let totalPlayer = 0;
 let player = {
   player1: '',
-  player2: ''
-}
+  player2: '',
+};
 
 io.on('connect', (socket) => {
   console.log('connected');
 
-  io.emit('totalPlayer', totalPlayer, player)
+  io.emit('totalPlayerStart', totalPlayer, player);
 
   socket.on('startGame', (playerName) => {
-    totalPlayer++  
+    totalPlayer++;
     if (totalPlayer == 1) {
-      player.player1 = playerName
+      player.player1 = playerName;
     } else if (totalPlayer > 1) {
-      player.player2 = playerName
+      player.player2 = playerName;
     }
-    io.emit('totalPlayer', totalPlayer, player)
-  })
+    io.emit('totalPlayerStart', totalPlayer, player);
+  });
 
-  socket.on('exitGame', () => {
-    totalPlayer = 0
-    io.emit('totalPlayer', totalPlayer)
-  })
+  socket.on('exitGame', (name) => {
+    totalPlayer = 0;
+    console.log(name);
+    // for (const p in player) {
+    //   if (player[p] == name) {
+    //     player[p] = '';
+    //   }
+    // }
+    io.emit('totalPlayer', totalPlayer, player, name);
+  });
 
   socket.on('fill', (id) => {
     socket.broadcast.emit('fillBack', id);

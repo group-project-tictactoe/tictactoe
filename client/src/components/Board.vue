@@ -115,21 +115,26 @@
     </div> -->
 
     <div style="text-align: center;" class="mt-3 mb-3">
-      
       <div class="inline-flex rounded-md shadow">
-        <a href="#" @click.prevent="replay()" class="inline-flex items-center transition duration-150 justify-center px-5 py-2 text-xl font-mono tracking-wider rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+        <a
+          href="#"
+          @click.prevent="replay()"
+          class="inline-flex items-center transition duration-150 justify-center px-5 py-2 text-xl font-mono tracking-wider rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+        >
           REPLAY
         </a>
       </div>
 
       <div class="ml-4 inline-flex rounded-md shadow">
-        <a href="#" @click.prevent="exit()" class="inline-flex items-center transition duration-150 justify-center px-5 py-2 text-xl font-mono tracking-wider rounded-md text-white bg-yellow-500 hover:bg-yellow-400">
+        <a
+          href="#"
+          @click.prevent="exit()"
+          class="inline-flex items-center transition duration-150 justify-center px-5 py-2 text-xl font-mono tracking-wider rounded-md text-white bg-yellow-500 hover:bg-yellow-400"
+        >
           EXIT
         </a>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -141,6 +146,7 @@ export default {
   data() {
     return {
       activePlayer: 'x',
+      player: '',
       // playerName: players.player1,
       cells: [null, null, null, null, null, null, null, null, null],
       countClicks: 0,
@@ -159,39 +165,39 @@ export default {
   },
   computed: {
     totalPlayer: {
-      get () {
-        return this.$store.state.totalPlayer
+      get() {
+        return this.$store.state.totalPlayer;
       },
-      set (value) {
-        this.$store.commit('SET_TOTAL_PLAYER', value)
-      }
+      set(value) {
+        this.$store.commit('SET_TOTAL_PLAYER', value);
+      },
     },
     players: {
-      get () {
-        return this.$store.state.players
+      get() {
+        return this.$store.state.players;
       },
-      set (value) {
-        this.$store.commit('SET_PLAYER_NAME', value)
-      }
+      set(value) {
+        this.$store.commit('SET_PLAYER_NAME', value);
+      },
     },
     playerName: {
-      get () {
-        let name = this.players.player1
+      get() {
+        let name = this.players.player1;
         if (this.activePlayer == 'x') {
-          name = this.players.player1
+          name = this.players.player1;
         } else {
-          name = this.players.player2
+          name = this.players.player2;
         }
-        return name
-      }
-    }
+        return name;
+      },
+    },
   },
   watch: {
-    totalPlayer (value) {
+    totalPlayer(value) {
       if (value == 0) {
-        this.$router.push('/')
+        this.$router.push('/');
       }
-    }
+    },
   },
   methods: {
     fillInCell(id) {
@@ -216,9 +222,11 @@ export default {
         socket.emit('fill', id);
       }
     },
-    exit () {
-      socket.emit('exitGame')
-      this.$router.push('/')
+    exit() {
+      const name = this.player;
+      // this.totalPlayer -= 1;
+      socket.emit('exitGame', name);
+      this.$router.push('/');
     },
     checkGame() {
       for (let i = 0; i <= 7; i++) {
@@ -252,6 +260,9 @@ export default {
       location.reload();
     },
   },
+  created() {
+    this.player = localStorage.player_name;
+  },
   mounted() {
     socket.on('fillBack', (id) => {
       console.log(id);
@@ -262,9 +273,14 @@ export default {
       this.replay();
     });
 
-    socket.on('totalPlayer', totalPlayer => {
-      this.totalPlayer = totalPlayer
-    })
+    socket.on('totalPlayer', (totalPlayer, player, name) => {
+      this.totalPlayer = totalPlayer;
+      // console.log(this.player, name);
+      // if (this.player == name) {
+      //   this.$router.push('/');
+      // }
+      // this.players = player;
+    });
   },
 };
 </script>
