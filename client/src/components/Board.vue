@@ -83,7 +83,7 @@
       </div> -->
       <!-- </div> -->
     </div>
-    <div style="text-align: center;">
+    <!-- <div style="text-align: center;">
       <span
         class="mt-2
         text-center
@@ -112,7 +112,24 @@
         @click.prevent="exit()"
         >EXIT</span
       >
+    </div> -->
+
+    <div style="text-align: center;" class="mt-3 mb-3">
+      
+      <div class="inline-flex rounded-md shadow">
+        <a href="#" @click.prevent="replay()" class="inline-flex items-center transition duration-150 justify-center px-5 py-2 text-xl font-mono tracking-wider rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+          REPLAY
+        </a>
+      </div>
+
+      <div class="ml-4 inline-flex rounded-md shadow">
+        <a href="#" @click.prevent="exit()" class="inline-flex items-center transition duration-150 justify-center px-5 py-2 text-xl font-mono tracking-wider rounded-md text-white bg-yellow-500 hover:bg-yellow-400">
+          EXIT
+        </a>
+      </div>
+
     </div>
+
   </div>
 </template>
 
@@ -422,7 +439,7 @@ export default {
 }
 
 .cell.o::before {
-  background-color: rgb(11, 159, 245);
+  background-color: rgba(79, 70, 229);
 }
 
 /* Buat efek hover di kotak yg masih kosong dan bisa diklik */

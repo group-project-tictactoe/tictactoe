@@ -1,14 +1,15 @@
 <template>
     <div>
-        <p style="color: white;">TOTAL PLAYER {{totalPlayer}}</p>
         <div v-if="totalPlayer < 2" id="login-sub-section">
-            <img class="mx-auto h-40 w-auto" :src="LogoTicTac" alt="TicTac Logo">
-            <h2 class="mt-2 text-center text-4xl font-medium ">
-                <span class="text-yellow-500">Enter your name</span><br>          
+            <img class="mx-auto mt-32 h-48 w-auto" :src="LogoTicTac" alt="TicTac Logo">
+            <h2 class="mt-4 text-center text-4xl font-extrabold tracking-normal ">
+                <span class="text-yellow-500 ">Ready to play?</span><br>          
             </h2>
-            <h2 class="mt-0 text-center text-4xl font-medium ">
-                <span class="text-gray-200">to play</span>
+            <h2 class="mt-0 mb-3 text-center text-4xl font-extralight ">
+                <span class="text-gray-200">Enter your name</span>
             </h2>
+            <h4 class="mt-4 mb-2 text-center text-gray-200 text-lg font-light tracking-wider antialiased">TOTAL PLAYER: {{totalPlayer}}</h4>
+        <!-- <p style="color: white;"></p> -->
         </div>
 
         <div v-if="totalPlayer < 2">
@@ -21,7 +22,7 @@
                 </div>
     
                 <div>
-                    <button @click.prevent="joinRoom" type="submit" class="group relative w-full flex justify-center py-2 px-4 transition duration-150 border border-transparent text-sm font-bold rounded-md text-white bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button @click.prevent="joinRoom" type="submit" class="group relative w-full flex justify-center py-2 px-4 transition duration-150 text-sm font-bold rounded-md text-white bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                         <svg class="h-5 w-5 text-yellow-700 group-hover:text-yellow-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
